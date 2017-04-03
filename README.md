@@ -2,13 +2,13 @@
 Given the recent problems with mandating privacy for Internet users, it's important, now more than ever, that people consider their own methods for ensuring their privacy online. A Raspberry Pi can provide an excellent method for helping secure a home or office network against the collection of personal information. While this script is designed for a Raspberry Pi and the Private Internet Access service, it should be modifiable to work with any OpenVPN compatible service and on any Debian Jessie based system.
 
 ## About
-This installer will help set up a Raspberry Pi to be a VPN gateway using the [Private Internet Access](https://www.privateinternetaccess.com/) service. By configuring a Raspberry Pi in this way, and pointing your router's DCHP at it, all traffic on your network can be funneled through an anonymous encrypted VPN tunnel for added privacy and security. This installer is based on the excellent work of superjamie found [here](https://gist.github.com/superjamie/ac55b6d2c080582a3e64).
+This installer will help set up a Raspberry Pi to be a VPN gateway using the [Private Internet Access](https://www.privateinternetaccess.com/) service. By configuring a Raspberry Pi in this way, and pointing your router's DCHP at it, all traffic on your network can be funneled through an encrypted VPN tunnel for added privacy and security. This installer is based on the excellent work of superjamie found [here](https://gist.github.com/superjamie/ac55b6d2c080582a3e64).
 
 __Warning:__ The scripts for this tool currently provide _no input validation_ for things like IP addresses; if you enter something incorrectly, abort the script and run it again, it should replace the bad settings. This tool is provided without warranty or guarantee that it will work correctly.
 
 Before getting started, please be aware there are some tradeoffs to a VPN:
 * There is overhead associated with the VPN on a Raspberry Pi, so your Internet connection could be slower. If having the absolute fastest connection is important, consider getting a [pre-configured router](https://www.flashrouters.com/vpn-types/privateinternetaccess).
-* VPNs do not guarantee absolute privacy or security.
+* VPNs do not guarantee absolute privacy or security (see [this article](https://arstechnica.com/security/2016/06/aiming-for-anonymity-ars-assesses-the-state-of-vpns-in-2016/)).
 * Sometimes services like Netflix or Hulu will block VPNs to prevent people circumventing region restrictions on content.
 * There is some complexity added to your home networking setup, which can cause problems in rare cases and can make troubleshooting more challenging.
 
