@@ -33,8 +33,8 @@ All utility scripts are placed in the `/home/pi/` directory, and must be run as 
 #### add_exception
 This utility will allow you to add an exception so that a specified local IP address and, optionally, port can bypass the VPN and access the Internet directly. When run, this script will ask for an IP address and an optional port and comment to create an exception for. It will also prompt you to select a protocol for the exception. The exception is added using the following iptables commands (omitting the port if not specified):
 ```bash
-sudo iptables -t mangle -I PREROUTING 1 --source "[IP ADDR]" -p "[PROTOCOL]" -m "[PROTOCOL]" --dport "[PORT]" -m comment --comment "$comment" --j MARK --set-mark 1
-sudo iptables -I FORWARD 1 --source "[IP ADDR]" -o eth0 -p "[PROTOCOL]" -m "[PROTOCOL]" --dport "[PORT]" -m comment --comment "$comment" --j ACCEPT
+sudo iptables -t mangle -I PREROUTING 1 --source "[IP ADDR]" -p "[PROTOCOL]" -m "[PROTOCOL]" --dport "[PORT]" -m comment --comment "[COMMENT]" --j MARK --set-mark 1
+sudo iptables -I FORWARD 1 --source "[IP ADDR]" -o eth0 -p "[PROTOCOL]" -m "[PROTOCOL]" --dport "[PORT]" -m comment --comment "[COMMENT]" --j ACCEPT
 ```
 To undue an exception, you'll need to manually remove the created iptables rules. How to do so, and other iptables manipulations, is beyond the scope of this guide.
 
