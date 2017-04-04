@@ -2,8 +2,8 @@
 
 #Check for root access.
 if [ $(id -u) != "0" ]; then
-    echo "You must be the superuser to run this script."
-    exit 1
+	echo "You must be the superuser to run this script."
+	exit 1
 fi
 
 #Setup       
@@ -58,7 +58,7 @@ select vpnregion in "${options[@]}" ; do
     if (( REPLY > 0 && REPLY <= ${#options[@]} )) ; then
         break
     else
-        echo "Invalid option. Try another one."
+	echo "Invalid option. Try another one."
     fi
 done
 
@@ -145,7 +145,7 @@ read -p 'Raspberry Pi IP address: ' piadr
 
 #Restore or backup original configuration
 if [ -f /etc/network/interfaces.orig ]; then
-    cp /etc/network/interfaces.orig /etc/network/interfaces
+	cp /etc/network/interfaces.orig /etc/network/interfaces
 else
 	cp /etc/network/interfaces /etc/network/interfaces.orig
 fi
@@ -153,7 +153,7 @@ sed -i "s/iface eth0 inet manual/iface eth0 inet static\n    address $piadr\n   
 
 #Restore or backup original configuration
 if [ -f /etc/dhcpcd.conf.orig ]; then
-    cp /etc/dhcpcd.conf.orig /etc/dhcpcd.conf
+	cp /etc/dhcpcd.conf.orig /etc/dhcpcd.conf
 else
 	cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
 fi
