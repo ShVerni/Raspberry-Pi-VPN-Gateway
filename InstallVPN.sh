@@ -239,10 +239,10 @@ select yn in "Yes" "No"; do
 		rm /etc/init.d/vpnbypass
 		cp vpnbypass /etc/init.d/
 		chmod 755 /etc/init.d/vpnbypass
-		update-rc.d vpnbypass defaults;
+		update-rc.d vpnbypass defaults
 		cp add_exception.sh /home/pi/
 		chmod 755 /home/pi/add_exception.sh
-		chown pi:pi /home/pi/add_exception.sh
+		chown pi:pi /home/pi/add_exception.sh;
 		break;;
         No) exit;;
     esac
