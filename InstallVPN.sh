@@ -10,7 +10,7 @@ fi
 clear
 echo "
 ~~~~~~~~~~~~~~~~~~~~~
-Welcome to the piVPN setup for PIA!
+Welcome to the PiVPN installer for PIA!
 First make sure you've already run the raspi-config program,
 if you haven't, push ctr+c and do so now. See the Read Me for details.
 ~~~~~~~~~~~~~~~~~~~~~
@@ -196,7 +196,7 @@ select yn in "Yes" "No"; do
 		iptables -I FORWARD -i eth0 ! -o tun0 -j DROP
 		iptables -A OUTPUT -o tun0 -m comment --comment "vpn" -j ACCEPT
 		iptables -A OUTPUT -o eth0 -p icmp -m comment --comment "icmp" -j ACCEPT
-		iptables -A OUTPUT -d 192.168.1.0/24 -o eth0 -m comment --comment "lan" -j ACCEPT
+		iptables -A OUTPUT -d "$gatewayadr"/24 -o eth0 -m comment --comment "lan" -j ACCEPT
 		iptables -A OUTPUT -o eth0 -p udp -m udp --dport 1198 -m comment --comment "openvpn" -j ACCEPT
 		iptables -A OUTPUT -o eth0 -p tcp -m tcp --sport 22 -m comment --comment "ssh" -j ACCEPT
 		iptables -A OUTPUT -o eth0 -p udp -m udp --dport 123 -m comment --comment "ntp" -j ACCEPT
