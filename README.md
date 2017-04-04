@@ -19,7 +19,7 @@ This tool comes with several features built-in, most of which can be optionally 
 This script will download, compile, and install the most recent versions of OpenVPN and Monit to ensure best performance and security.
 
 ### Monit
-The script will install and configure [Monit](https://mmonit.com/), which will monitor the VPN connection and ping Google.com every 10 seconds to ensure a good connection. If anything goes wrong, Monit will force a reboot by calling the `/home/pi/vpnfix.sh` script to try and solve the problem. When this happens, a timestamp will be written to the `/home/pi/vpnfix.log` file. Rebooting typically takes under 10 seconds to complete.
+The script will install and configure [Monit](https://mmonit.com/), which will monitor the VPN connection and ping Google.com every 10 seconds to ensure a good connection. If anything goes wrong, Monit will force a reboot by calling the `/home/pi/vpnfix.sh` script to try and solve the problem. When this happens, a timestamp will be written to the `/home/pi/vpnfix.log` file. Rebooting typically takes ~10 seconds to complete.
 
 ### Kill switch
 When enabled, the kill switch will block any traffic that does not go over the VPN tunnel. This means that if the VPN connection goes down, nothing on your network will be able to connect to the Internet unless you reset your default gateway to be your router (see the [Set Up Router](#set-up-router) section).
@@ -31,7 +31,7 @@ When enabled, this will allow you to set up certain local IP addresses and (opti
 All utility scripts are placed in the `/home/pi/` directory, and must be run as root.
 
 #### add_exception
-This utility will allow you to add an exception so that a specified local IP address and, optionally, port can bypass the VPN and access the Internet directly. When run, this script will ask for an IP address and an optional port and comment to create an exception for. It will also prompt you to select a protocol for the exception. This is done using the following iptables commands (omitting the port if not specified):
+This utility will allow you to add an exception so that a specified local IP address and, optionally, port can bypass the VPN and access the Internet directly. When run, this script will ask for an IP address and an optional port and comment to create an exception for. It will also prompt you to select a protocol for the exception. The exception is added using the following iptables commands (omitting the port if not specified):
 ```bash
 sudo iptables -t mangle -I PREROUTING 1 --source "[IP ADDR]" -p "[PROTOCOL]" -m "[PROTOCOL]" --dport "[PORT]" -m comment --comment "$comment" --j MARK --set-mark 1
 sudo iptables -I FORWARD 1 --source "[IP ADDR]" -o eth0 -p "[PROTOCOL]" -m "[PROTOCOL]" --dport "[PORT]" -m comment --comment "$comment" --j ACCEPT
@@ -39,7 +39,7 @@ sudo iptables -I FORWARD 1 --source "[IP ADDR]" -o eth0 -p "[PROTOCOL]" -m "[PRO
 To undue an exception, you'll need to manually remove the created iptables rules. How to do so, and other iptables manipulations, is beyond the scope of this guide.
 
 #### swap_endpoint
-This utility will allow you to swap the VPN endpoint (VPN gateway) that you use. This will change the location or country that your traffic appears to come from. For best performance, you generally want to pick an enpoint near you, but there can be many reasons to use a different endpint. This script is mostly here as an example, and could be easily modified to work with a cron job to change your endpoint at regular intervals for added obfuscation.
+This utility will allow you to swap the VPN endpoint (VPN gateway) that you use. This will change the location or country that your traffic appears to come from. For best performance, you generally want to pick an endpoint near you, but there can be many reasons to use a different endpint. This script is mostly here as an example, and could be easily modified to work with a cron job to change your endpoint at regular intervals for added obfuscation.
 
 ## Requirements
 This guide assumes you have some basic familiarity with Linux and the command line, if not, these [two](https://learn.adafruit.com/what-is-the-command-line/overview) [guides](http://linuxcommand.org/lc3_learning_the_shell.php) are a good introduction, and more general information can be found at the official [Raspberry Pi documentation](https://www.raspberrypi.org/documentation/). Again, if you'd rather not deal with the potential complexity of all this, consider a [pre-configured router](https://www.flashrouters.com/vpn-types/privateinternetaccess) or just using the [apps and programs](https://www.privateinternetaccess.com/pages/client-support/) provided by Private Internet Access.
@@ -103,7 +103,7 @@ tun0      Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
 ```
 
 ### Set Up Router
-Now that your Raspberry Pi is up and running, you need to point your router's DHCP configuration at it. Each router is different, but in general, look in your router's settings for the DHCP settings and configure them to match the following:
+Now that your Raspberry Pi is up and running, you need to point your router's DHCP configuration at it. Each router is different, but in general, look in your router's settings for the DHCP configuration and change it to match the following:
 > Default gateway: [ip address of raspberry pi]
 >
 > Primary DNS: [ip address of raspberry pi]
