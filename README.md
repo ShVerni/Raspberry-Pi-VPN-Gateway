@@ -6,6 +6,8 @@ This installer will help set up a Raspberry Pi to be a VPN gateway using the [Pr
 
 __Warning:__ The scripts for this tool currently provide _no input validation_ for things like IP addresses; if you enter something incorrectly, abort the script and run it again, it should replace the bad settings. This tool is provided without warranty or guarantee that it will work correctly.
 
+This is very much a work in progress, and I'm no Bash or Linux expert, so any feedback is much appreciated!
+
 Before getting started, please be aware there are some tradeoffs to a VPN:
 * There is overhead associated with the VPN on a Raspberry Pi, so your Internet connection could be slower. If having the absolute fastest connection is important, consider getting a [pre-configured router](https://www.flashrouters.com/vpn-types/privateinternetaccess).
 * VPNs do not guarantee absolute privacy or security (see [this article](https://arstechnica.com/security/2016/06/aiming-for-anonymity-ars-assesses-the-state-of-vpns-in-2016/)).
