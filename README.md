@@ -36,7 +36,7 @@ This utility will allow you to add an exception so that a specified local IP add
 sudo iptables -t mangle -I PREROUTING 1 --source "[IP ADDR]" -p "[PROTOCOL]" -m "[PROTOCOL]" --dport "[PORT]" -m comment --comment "[COMMENT]" --j MARK --set-mark 1
 sudo iptables -I FORWARD 1 --source "[IP ADDR]" -o eth0 -p "[PROTOCOL]" -m "[PROTOCOL]" --dport "[PORT]" -m comment --comment "[COMMENT]" --j ACCEPT
 ```
-To undue an exception, you'll need to manually remove the created iptables rules. How to do so, and other iptables manipulations, is beyond the scope of this guide.
+To undo an exception, you'll need to manually remove the created iptables rules manually. How to do so, and other iptables manipulations, is beyond the scope of this guide.
 
 #### swap_endpoint
 This utility will allow you to swap the VPN endpoint (VPN gateway) that you use. This will change the location or country that your traffic appears to come from. For best performance, you generally want to pick an endpoint near you, but there can be many reasons to use a different endpint. This script is mostly here as an example, and could be easily modified to work with a cron job to change your endpoint at regular intervals for added obfuscation.
@@ -54,7 +54,7 @@ This guide assumes you have some basic familiarity with Linux and the command li
 
 ## Installation
 ### Set Up Raspbian
-Download and install the Raspbian Jessie Lite image to your SD card using [this guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md). Once you finish writing the image to the SD card, you'll need to enable SSH. From the [Raspberry Pi](https://www.raspberrypi.org/documentation/remote-access/ssh/) documentation:
+Download and install the Raspbian Jessie Lite image to your SD card using [this guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md), using NOOBS with Raspbian would also probably work. Once you finish writing the image to the SD card, you'll need to enable SSH. From the [Raspberry Pi](https://www.raspberrypi.org/documentation/remote-access/ssh/) documentation:
 >For headless setup, SSH can be enabled by placing a file named 'ssh', without any extension, onto the boot partition of the SD card. When the Pi boots, it looks for the 'ssh' file. If it is found, SSH is enabled, and the file is deleted. The content of the file does not matter: it could contain text, or nothing at all.
 
 You will need the Raspberry Pi to have an internet connection from here on out. The best way is to plug the Pi into your router via Ethernet. Connecting via WiFi or using the Pi as a WiFi router is beyond the scope of this guide.
@@ -75,7 +75,7 @@ You'll be presented with a menu, choose the following options one at a time:
 You'll be prompted to reboot, do so.
 
 ### Run Installation Script
-__Note:__ This script is designed to run on a clean installation of Raspbian or a device that has already had this script run on it, running it on a previously configured device could cause problems.
+__Note:__ This script is designed to run on a clean installation of Raspbian or a device that has already had this script run on it, running it on a previously configured device could cause problems and overwrite the previous settings.
 
 Things you'll need to know before running this script:
 * The IP address of your current gateway (router), usually something like 192.168.0.1 or 192.168.1.1.
@@ -110,4 +110,4 @@ Now that your Raspberry Pi is up and running, you need to point your router's DH
 >
 > Secondary DNS: [ip address of raspberry pi]
 
-Substitute the IP address you chose for your Raspberry Pi for [ip address of raspberry pi]. Save your settings and reboot your router, you may need to reboot your Raspberry Pi too. If everything went well, you should be all done!
+Substitute the IP address you chose for your Raspberry Pi for [ip address of raspberry pi]. Save your settings and reboot your router, you may need to reboot your Raspberry Pi as well. If everything went well, you should be all done!
