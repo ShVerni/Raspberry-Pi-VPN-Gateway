@@ -69,7 +69,7 @@ You'll be presented with a menu, choose the following options one at a time:
 * Change User Password
 * Boot Options > B1 Desktop / CLI > B2 Console Autologin
 * Localisation Options (do each item in this submenu)
-* Overclock > High (only recommended if you have a case with a fan)
+* Overclock > High (not available for the Pi 3, and only recommended if you have a case with a fan)
 * Advanced Options > A1 Expand Filesystem
 * Advanced Options > A3 Memory Split (set to 16)
 * Finish (push tab key to get to this option)
