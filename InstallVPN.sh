@@ -262,6 +262,7 @@ select yn in "Yes" "No"; do
 		workingdir=$(pwd)
 		cd ..
 		rm -R "$workingdir";
+		rm /home/pi/master.zip
 		break;;
         No) exit;;
     esac
