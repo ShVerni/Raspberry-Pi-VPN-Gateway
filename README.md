@@ -92,7 +92,7 @@ cd Raspberry-Pi-VPN-Gateway-master
 sudo chmod 744 InstallVPN.sh
 sudo ./InstallVPN.sh
 ```
-This will start the installation script which is divided into several sections. Follow the prompts and enter the appropriate information when asked. One thing to note, during the first section of installing programs, a screen will appear asking to save the iptables configuration, just hit \<Yes\> or \<No\> twice when it asks, what you pick doesn't matter for this. The script will take ~30-40 minutes to finish, most of which doesn't require your attention.
+This will start the installation script which is divided into several sections. Follow the prompts and enter the appropriate information when asked. One thing to note, during the first section of installing programs, a screen will appear asking to save the iptables rules, just hit \<Yes\> or \<No\> twice when it asks, what you pick doesn't matter for this. The script will take ~30-40 minutes to finish, most of which doesn't require your attention.
 
 Once the script finishes, it will prompt you to reboot, once you do so you can check if the VPN is working by running this command:
 ```bash
