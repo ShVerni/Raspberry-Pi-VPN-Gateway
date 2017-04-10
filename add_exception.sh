@@ -21,7 +21,7 @@ read -p 'Port [optional]: ' port
 read -p 'Comment [optional]: ' comment
 
 PS3='Select a protocol: '
-select prot in "tcp" "udp" "icmp" "all" ; do
+select prot in "tcp" "udp" ; do
 	if (( REPLY > 0 && REPLY <= 4 )); then
         break
     else
