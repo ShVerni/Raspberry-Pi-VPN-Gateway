@@ -20,6 +20,9 @@ This tool comes with several features built-in, most of which can be optionally 
 ### Up to Date
 This script will download, compile, and install the most recent versions of OpenVPN and Monit to ensure best performance and security.
 
+### Strong Encryption
+This script will allow you to use the strongest encryption options [PIA offers](https://helpdesk.privateinternetaccess.com/hc/en-us/articles/218984968-What-is-the-difference-between-the-OpenVPN-config-files-on-your-website). Using stronger encryption will slow down the performance of the gateway, and therefore is not recommended unless you really want or need it. More information can be found [here](https://helpdesk.privateinternetaccess.com/hc/en-us/articles/231104368-What-Encryption-Can-I-Use). 
+
 ### Monit
 The script will install and configure [Monit](https://mmonit.com/), which will monitor the VPN connection and ping Google.com every 10 seconds to ensure a good connection. If anything goes wrong, Monit will force a reboot by calling the `/home/pi/vpnfix.sh` script to try and solve the problem. When this happens, a timestamp will be written to the `/home/pi/vpnfix.log` file. Rebooting typically takes ~10 seconds to complete.
 
