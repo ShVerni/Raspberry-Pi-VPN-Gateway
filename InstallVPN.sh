@@ -44,10 +44,25 @@ read -n 1 -s
 read -p 'PIA username: ' uservar
 read -p 'PIA password: ' passvar
 
-#Setup VPN configuration file
-echo "Getting VPN configurations..."
-wget https://www.privateinternetaccess.com/openvpn/openvpn.zip
+STRONG=0
+echo "
+Do you wish to use the strongest encryption instead of the default? This will result in slower performance."
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes)
+		STRONG=1
+		echo "Getting VPN configurations..."
+		wget -q https://www.privateinternetaccess.com/openvpn/openvpn-strong.zip -O openvpn.zip
+		break;;
+        No) 
+		echo "Getting VPN configurations..."
+		wget -q https://www.privateinternetaccess.com/openvpn/openvpn.zip -O openvpn.zip
+		break;;
+    esac
+done
 unzip -o openvpn.zip -d /home/pi/PIAopenvpn
+
+#Setup VPN configuration file
 chown -R pi:pi /home/pi/PIAopenvpn
 files=$(find /home/pi/PIAopenvpn/ -maxdepth 1 -type f -regex ".*ovpn")
 readarray -t options <<<"$files"
@@ -66,14 +81,21 @@ cp swap_endpoint.sh /home/pi/
 chown pi:pi /home/pi/swap_endpoint.sh
 chmod 755 /home/pi/swap_endpoint.sh
 
-cp /home/pi/PIAopenvpn/ca.rsa.2048.crt /home/pi/PIAopenvpn/crl.rsa.2048.pem /etc/openvpn/
+if [ "$STRONG" -eq 0 ]; then
+	cp /home/pi/PIAopenvpn/ca.rsa.2048.crt /home/pi/PIAopenvpn/crl.rsa.2048.pem /etc/openvpn/
+else
+	cp /home/pi/PIAopenvpn/ca.rsa.4096.crt /home/pi/PIAopenvpn/crl.rsa.4096.pem /etc/openvpn/
+fi
 cp "$vpnregion" /etc/openvpn/PIAvpn.conf
 
 #Modify configuration
-sed -i 's/ca ca.rsa.2048.crt/ca \/etc\/openvpn\/ca.rsa.2048.crt/' /etc/openvpn/PIAvpn.conf
-sed -i 's/auth-user-pass/auth-user-pass \/etc\/openvpn\/login/' /etc/openvpn/PIAvpn.conf
-sed -i 's/crl-verify crl.rsa.2048.pem/crl-verify \/etc\/openvpn\/crl.rsa.2048.pem/' /etc/openvpn/PIAvpn.conf
-echo "auth-nocache" | tee -a /etc/openvpn/PIAvpn.conf
+if [ "$STRONG" -eq 0 ]; then
+	sed -i 's/ca ca.rsa.2048.crt/ca \/etc\/openvpn\/ca.rsa.2048.crt/' /etc/openvpn/PIAvpn.conf
+	sed -i 's/crl-verify crl.rsa.2048.pem/crl-verify \/etc\/openvpn\/crl.rsa.2048.pem/' /etc/openvpn/PIAvpn.conf
+else
+	sed -i 's/ca ca.rsa.4096.crt/ca \/etc\/openvpn\/ca.rsa.4096.crt/' /etc/openvpn/PIAvpn.conf
+	sed -i 's/crl-verify crl.rsa.4096.pem/crl-verify \/etc\/openvpn\/crl.rsa.4096.pem/' /etc/openvpn/PIAvpn.conf
+fi
 
 #Add credentials
 rm /etc/openvpn/login
