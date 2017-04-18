@@ -226,7 +226,7 @@ select yn in "Yes" "No"; do
 		iptables -A OUTPUT -o eth0 -p tcp -m tcp --dport 53 -m comment --comment "dns" -j ACCEPT
 		iptables -A OUTPUT -o eth0 -j DROP;
 		break;;
-        No) exit;;
+        No) break;;
     esac
 done
 sleep 1
@@ -266,7 +266,7 @@ select yn in "Yes" "No"; do
 		chmod 755 /home/pi/add_exception.sh
 		chown pi:pi /home/pi/add_exception.sh;
 		break;;
-        No) exit;;
+        No) break;;
     esac
 done
 
@@ -286,7 +286,7 @@ select yn in "Yes" "No"; do
 		rm -R "$workingdir";
 		rm /home/pi/master.zip
 		break;;
-        No) exit;;
+        No) break;;
     esac
 done
 
