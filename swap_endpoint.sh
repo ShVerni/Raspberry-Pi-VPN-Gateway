@@ -27,13 +27,31 @@ select vpnregion in "${options[@]}" ; do
     fi
 done
 service openvpn stop
-cp /home/pi/PIAopenvpn/ca.rsa.2048.crt /home/pi/PIAopenvpn/crl.rsa.2048.pem /etc/openvpn/
+
+if grep -Fxq "cipher aes-128-cbc" /etc/openvpn/PIAvpn.conf
+then
+	STRONG=0
+else
+	STRONG=1
+fi
+
+if [ "$STRONG" -eq 0 ]; then
+	cp /home/pi/PIAopenvpn/ca.rsa.2048.crt /home/pi/PIAopenvpn/crl.rsa.2048.pem /etc/openvpn/
+else
+	cp /home/pi/PIAopenvpn/ca.rsa.4096.crt /home/pi/PIAopenvpn/crl.rsa.4096.pem /etc/openvpn/
+fi
 cp "$vpnregion" /etc/openvpn/PIAvpn.conf
 
 #Modify configuration
-sed -i 's/ca ca.rsa.2048.crt/ca \/etc\/openvpn\/ca.rsa.2048.crt/' /etc/openvpn/PIAvpn.conf
+if [ "$STRONG" -eq 0 ]; then
+	sed -i 's/ca ca.rsa.2048.crt/ca \/etc\/openvpn\/ca.rsa.2048.crt/' /etc/openvpn/PIAvpn.conf
+	sed -i 's/crl-verify crl.rsa.2048.pem/crl-verify \/etc\/openvpn\/crl.rsa.2048.pem/' /etc/openvpn/PIAvpn.conf
+else
+	sed -i 's/ca ca.rsa.4096.crt/ca \/etc\/openvpn\/ca.rsa.4096.crt/' /etc/openvpn/PIAvpn.conf
+	sed -i 's/crl-verify crl.rsa.4096.pem/crl-verify \/etc\/openvpn\/crl.rsa.4096.pem/' /etc/openvpn/PIAvpn.conf
+fi
+
 sed -i 's/auth-user-pass/auth-user-pass \/etc\/openvpn\/login/' /etc/openvpn/PIAvpn.conf
-sed -i 's/crl-verify crl.rsa.2048.pem/crl-verify \/etc\/openvpn\/crl.rsa.2048.pem/' /etc/openvpn/PIAvpn.conf
 echo "auth-nocache" | tee -a /etc/openvpn/PIAvpn.conf
 
 clear
@@ -43,7 +61,7 @@ echo "
 Done! Do you want to reboot?
 ~~~~~~~~~~~~~~~~~~~~~~
 "
-
+PS3='#: '
 select yn in "Yes" "No"; do
     case $yn in
         Yes) ( sleep 3 ; reboot ) &
