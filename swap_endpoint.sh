@@ -11,7 +11,7 @@ echo "
 This utility let's you swap out the endpoint, or
 VPN gateway, that you conenct through.
 ~~~~~~~~~~~~~~~~~~~~~
-Press any key to continue"
+Press any key to continue" 
 read -n 1 -s
 
 files=$(find /home/pi/PIAopenvpn/ -maxdepth 1 -type f -regex ".*ovpn")
