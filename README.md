@@ -26,7 +26,7 @@ This script will allow you to use the strongest encryption options [PIA offers](
 ### Monit
 The script will install and configure [Monit](https://mmonit.com/), which will monitor the VPN connection and ping Google.com every 10 seconds to ensure a good connection. If anything goes wrong, Monit will force a reboot by calling the `/home/pi/vpnfix.sh` script to try and solve the problem. When this happens, a timestamp will be written to the `/home/pi/vpnfix.log` file. Rebooting typically takes ~10 seconds to complete.
 
-### Kill switch
+### Kill Switch
 When enabled, the kill switch will block any traffic that does not go over the VPN tunnel. This means that if the VPN connection goes down, nothing on your network will be able to connect to the Internet unless you reset your default gateway to be your router (see the [Set Up Router](#set-up-router) section).
 
 ### VPN Bypass
@@ -95,7 +95,7 @@ cd Raspberry-Pi-VPN-Gateway-master
 sudo chmod 744 InstallVPN.sh
 sudo ./InstallVPN.sh
 ```
-This will start the installation script which is divided into several sections. Follow the prompts and enter the appropriate information when asked. One thing to note, during the first section of installing programs, a screen will appear asking to save the iptables rules, just hit \<Yes\> or \<No\> twice when it asks, what you pick doesn't matter for this. The script will take ~30-40 minutes to finish, most of which doesn't require your attention.
+This will start the installation script which is divided into several sections. Follow the prompts and enter the appropriate information when asked. The script will take ~30-40 minutes to finish depednin on your internet connection, most of which doesn't require your attention.
 
 Once the script finishes, it will prompt you to reboot, once you do so you can check if the VPN is working by running this command:
 ```bash
