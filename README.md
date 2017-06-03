@@ -41,7 +41,7 @@ This utility will allow you to add an exception so that a specified local IP add
 sudo iptables -t mangle -I PREROUTING 1 --source "[IP ADDR]" -p "[PROTOCOL]" -m "[PROTOCOL]" --dport "[PORT]" -m comment --comment "[COMMENT]" --j MARK --set-mark 1
 sudo iptables -I FORWARD 1 --source "[IP ADDR]" -o eth0 -p "[PROTOCOL]" -m "[PROTOCOL]" --dport "[PORT]" -m comment --comment "[COMMENT]" --j ACCEPT
 ```
-To undo an exception, you'll need to manually remove the created iptables rules manually. How to do so, and other iptables manipulations, is beyond the scope of this guide.
+To undo an exception, you'll need to manually remove the created iptables rules. How to do so, and other iptables manipulations, is beyond the scope of this guide.
 
 #### swap_endpoint
 This utility will allow you to swap the VPN endpoint (VPN gateway) that you use. This will change the location or country that your traffic appears to come from. For best performance, you generally want to pick an endpoint near you, but there can be many reasons to use a different endpint. This script is mostly here as an example, and could be easily modified to work with a cron job to change your endpoint at regular intervals for added obfuscation.
@@ -95,7 +95,7 @@ cd Raspberry-Pi-VPN-Gateway-master
 sudo chmod 744 InstallVPN.sh
 sudo ./InstallVPN.sh
 ```
-This will start the installation script which is divided into several sections. Follow the prompts and enter the appropriate information when asked. The script will take ~30-40 minutes to finish depednin on your internet connection, most of which doesn't require your attention.
+This will start the installation script which is divided into several sections. Follow the prompts and enter the appropriate information when asked. The script will take ~30-40 minutes to finish depending on your internet connection, most of which doesn't require your attention.
 
 Once the script finishes, it will prompt you to reboot, once you do so you can check if the VPN is working by running this command:
 ```bash
