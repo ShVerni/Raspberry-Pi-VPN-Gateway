@@ -124,6 +124,10 @@ cd ..
 #Enable Openvpn
 systemctl enable openvpn@PIAvpn
 
+cp update_openVPN.sh /home/pi/
+chown pi:pi /home/pi/update_openVPN.sh
+chmod 755 /home/pi/update_openVPN.sh
+
 clear
 echo "
 ~~~~~~~~~~~~~~~~~~~~~
