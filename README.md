@@ -46,6 +46,27 @@ To undo an exception, you'll need to manually remove the created iptables rules.
 #### swap_endpoint
 This utility will allow you to swap the VPN endpoint (VPN gateway) that you use. This will change the location or country that your traffic appears to come from. For best performance, you generally want to pick an endpoint near you, but there can be many reasons to use a different endpint. This script is mostly here as an example, and could be easily modified to work with a cron job to change your endpoint at regular intervals for added obfuscation.
 
+#### update_OpenVPN
+This utility will check to see if there is a newer version of OpenVPN available and, if so, will download, compile, and install it. During this process the VPN will be shutdown and, if you've enabled the [Kill Switch](#kill-switch), your Internet connection will be unavailable until this process is complete. This script can be enabled as a weekly cron job at a convenient time, along with other commands (an example of which is provided below) to keep the system up-to-date. Note that updates can be potentially breaking, but their importance often makes this a risk worth taking. Due to these complexities, creating cron jobs for automatic updating is not covered in this guide, however there are many [tutorials](https://help.ubuntu.com/community/CronHowto#Starting_to_Use_Cron) out there. You will need to use the root crontab and the `bash /home/pi/[script_name]` command.
+
+Below is an example of a script that can be used to update Raspbian:
+```bash
+#!/bin/bash
+#Check for root access.
+if [ $(id -u) != "0" ]; then
+        echo "You must be the superuser to run this script."
+        exit 1
+fi
+apt-get update
+apt-get upgrade -y
+apt-get dist-upgrade -y
+apt-get autoremove -y
+apt-get autoclean
+echo "$(date +"%F %T") Device updated" >> /home/pi/vpnfix.log
+( sleep 2 ; reboot ) &
+exit 0
+```
+
 ## Requirements
 This guide assumes you have some basic familiarity with Linux and the command line, if not, these [two](https://learn.adafruit.com/what-is-the-command-line/overview) [guides](http://linuxcommand.org/lc3_learning_the_shell.php) are a good introduction, and more general information can be found at the official [Raspberry Pi documentation](https://www.raspberrypi.org/documentation/). Again, if you'd rather not deal with the potential complexity of all this, consider a [pre-configured router](https://www.flashrouters.com/vpn-types/privateinternetaccess) or just using the [apps and programs](https://www.privateinternetaccess.com/pages/client-support/) provided by Private Internet Access.
 
