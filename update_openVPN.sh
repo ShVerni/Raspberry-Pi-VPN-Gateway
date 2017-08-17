@@ -21,6 +21,6 @@ if [ "$NEW_VERSION" != "$OLD_VERSION" ]; then
 	rm -R openvpn-new
 	systemctl start openvpn
 	systemctl start monit.service
-	echo "$(date +"%F %T") OpenVPN Updated" >> /home/pi/vpnfix.log
+	echo "$(date +"%F %T") OpenVPN Updated from $OLD_VERSION to $NEW_VERSION" >> /home/pi/vpnfix.log
 fi
 exit 0
