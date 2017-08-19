@@ -26,7 +26,8 @@ select vpnregion in "${options[@]}" ; do
         echo "Invalid option. Try another one."
     fi
 done
-service openvpn stop
+systemctl stop monit.service
+systemctl stop openvpn
 
 if grep -Fxq "cipher aes-128-cbc" /etc/openvpn/PIAvpn.conf
 then
@@ -54,20 +55,13 @@ fi
 sed -i 's/auth-user-pass/auth-user-pass \/etc\/openvpn\/login/' /etc/openvpn/PIAvpn.conf
 echo "auth-nocache" | tee -a /etc/openvpn/PIAvpn.conf
 
-clear
+#Restart OpenVPN
+systemctl start openvpn
+systemctl start monit.service
 
 echo "
 ~~~~~~~~~~~~~~~~~~~~~~
-Done! Do you want to reboot?
+Done!
 ~~~~~~~~~~~~~~~~~~~~~~
 "
-PS3='#: '
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes) ( sleep 3 ; reboot ) &
-			 echo "Restarting...";
-		break;;
-        No) exit 0;;
-    esac
-done
-exit 0;
+exit 0
