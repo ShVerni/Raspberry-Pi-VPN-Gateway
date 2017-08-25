@@ -113,7 +113,7 @@ Press any key to continue"
 read -n 1 -s
 
 #Openvpn update
-wget http://build.openvpn.net/downloads/releases/latest/openvpn-latest-stable.tar.gz
+wget https://build.openvpn.net/downloads/releases/latest/openvpn-latest-stable.tar.gz
 mkdir openvpn-new
 gzip -dc openvpn-latest-stable.tar.gz | tar -xf - -C openvpn-new --strip-components=1
 cd openvpn-new/
