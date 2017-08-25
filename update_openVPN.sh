@@ -5,7 +5,7 @@ if [ $(id -u) != "0" ]; then
 	exit 1
 fi
 NEW_VERSION=$(wget -qO - http://build.openvpn.net/downloads/releases/latest/LATEST.txt | head -1 | egrep -o '([0-9]\.?[0-9]\.?[0-9]\.?[0-9]?)')
-OLD_VERSION=$(openvpn --version | head -1 | egrep -o '([0-9]\.?[0-9]\.?[0-9]\.?[0-9]?) ' | tr -d '[:space:]')
+OLD_VERSION=$(/usr/sbin/openvpn --version | head -1 | egrep -o '([0-9]\.?[0-9]\.?[0-9]\.?[0-9]?) ' | tr -d '[:space:]')
 if [ "$NEW_VERSION" != "$OLD_VERSION" ]; then
 	wget http://build.openvpn.net/downloads/releases/latest/openvpn-latest-stable.tar.gz
 	systemctl stop monit.service
