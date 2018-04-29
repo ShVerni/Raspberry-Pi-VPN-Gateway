@@ -177,7 +177,7 @@ if [ -f /etc/network/interfaces.orig ]; then
 else
 	cp /etc/network/interfaces /etc/network/interfaces.orig
 fi
-sed -i "s/iface eth0 inet manual/iface eth0 inet static\n    address $piadr\n    netmask 255.255.255.0\n    gateway $gatewayadr\n    dns-nameservers 8.8.8.8 8.8.4.4/" /etc/network/interfaces
+sed -i "s/iface eth0 inet manual/iface eth0 inet static\n    address $piadr\n    netmask 255.255.255.0\n    gateway $gatewayadr\n    dns-nameservers 209.222.18.222 209.222.18.218/" /etc/network/interfaces
 
 #Restore or backup original configuration
 if [ -f /etc/dhcpcd.conf.orig ]; then
@@ -185,7 +185,7 @@ if [ -f /etc/dhcpcd.conf.orig ]; then
 else
 	cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
 fi
-echo -e "interface eth0\nstatic\nip_address=${piadr}/24\nstatic routers=${gatewayadr}\nstatic domain_name_servers=8.8.8.8 8.8.4.4" | tee -a  /etc/dhcpcd.conf
+echo -e "interface eth0\nstatic\nip_address=${piadr}/24\nstatic routers=${gatewayadr}\nstatic domain_name_servers=209.222.18.222 209.222.18.218" | tee -a  /etc/dhcpcd.conf
 
 #Routing rules
 if ! grep -Fxq "net.ipv4.ip_forward = 1" /etc/sysctl.conf; then
