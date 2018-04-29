@@ -91,6 +91,7 @@ sudo raspi-config
 ```
 You'll be presented with a menu, choose the following options one at a time:
 * Change User Password
+* Network Option > N3 Network interface names > No (important to enable eth0 as ethernet network name)
 * Boot Options > B1 Desktop / CLI > B2 Console Autologin
 * Localisation Options (do each item in this submenu)
 * Overclock > High (not available for the Pi 3, and only recommended if you have a case with a fan)
