@@ -98,6 +98,8 @@ else
 	sed -i 's/ca ca.rsa.4096.crt/ca \/etc\/openvpn\/ca.rsa.4096.crt/' /etc/openvpn/PIAvpn.conf
 	sed -i 's/crl-verify crl.rsa.4096.pem/crl-verify \/etc\/openvpn\/crl.rsa.4096.pem/' /etc/openvpn/PIAvpn.conf
 fi
+echo "auth-nocache" | tee -a /etc/openvpn/PIAvpn.conf
+echo -e "script-security 2\nup /etc/openvpn/update-resolv-conf\ndown /etc/openvpn/update-resolv-conf" | tee -a /etc/openvpn/PIAvpn.conf
 
 #Add credentials
 rm /etc/openvpn/login
