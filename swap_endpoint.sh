@@ -54,6 +54,7 @@ fi
 
 sed -i 's/auth-user-pass/auth-user-pass \/etc\/openvpn\/login/' /etc/openvpn/PIAvpn.conf
 echo "auth-nocache" | tee -a /etc/openvpn/PIAvpn.conf
+echo -e "script-security 2\nup /etc/openvpn/update-resolv-conf\ndown /etc/openvpn/update-resolv-conf" | tee -a /etc/openvpn/PIAvpn.conf
 
 #Restart OpenVPN
 systemctl start openvpn
