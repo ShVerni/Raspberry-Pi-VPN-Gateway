@@ -27,7 +27,7 @@ read -n 1 -s
 
 #Intall things
 echo iptables-persistent iptables-persistent/autosave_v4 boolean false | sudo debconf-set-selections
-echo iptables-persistent iptables-persistent/autosave_v4 boolean false | sudo debconf-set-selections
+echo iptables-persistent iptables-persistent/autosave_v6 boolean false | sudo debconf-set-selections
 apt-get update
 apt-get upgrade -y
 apt-get dist-upgrade -y
