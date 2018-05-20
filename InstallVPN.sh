@@ -179,7 +179,12 @@ if [ -f /etc/network/interfaces.orig ]; then
 else
 	cp /etc/network/interfaces /etc/network/interfaces.orig
 fi
-sed -i "s/iface eth0 inet manual/iface eth0 inet static\n    address $piadr\n    netmask 255.255.255.0\n    gateway $gatewayadr\n    dns-nameservers 209.222.18.222 209.222.18.218/" /etc/network/interfaces
+
+if ! grep -Fq "iface eth0 inet" /etc/network/interfaces; then
+	echo -e "iface eth0 inet static\n    address $piadr\n    netmask 255.255.255.0\n    gateway $gatewayadr\n    dns-nameservers 209.222.18.222 209.222.18.218/" | tee -a /etc/network/interfaces
+else
+	sed -i -r "s/iface eth0 inet manual|iface eth0 inet auto/iface eth0 inet static\n    address $piadr\n    netmask 255.255.255.0\n    gateway $gatewayadr\n    dns-nameservers 209.222.18.222 209.222.18.218/" /etc/network/interfaces
+fi
 
 #Restore or backup original configuration
 if [ -f /etc/dhcpcd.conf.orig ]; then
@@ -191,7 +196,7 @@ echo -e "interface eth0\nstatic\nip_address=${piadr}/24\nstatic routers=${gatewa
 
 #Routing rules
 if ! grep -Fxq "net.ipv4.ip_forward = 1" /etc/sysctl.conf; then
-	echo -e '\n#Enable IP Routing\nnet.ipv4.ip_forward = 1' |  tee -a /etc/sysctl.conf
+	echo -e '\n#Enable IP Routing\nnet.ipv4.ip_forward = 1' | tee -a /etc/sysctl.conf
 fi
 sysctl -p
 
