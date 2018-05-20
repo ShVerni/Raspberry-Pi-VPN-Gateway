@@ -8,7 +8,7 @@ check process OpenVPN matching "openvpn"
 check network tun0 with interface tun0
         if failed link for 3 cycles then exec '/home/pi/vpnfix.sh'
 
-check network tun0_2 with interface tun0
+check network restartOpenVPN with interface tun0
         if failed link then exec "/bin/systemctl reload-or-restart openvpn@PIAvpn"
 
 check host google.com with address google.com
