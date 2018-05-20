@@ -31,7 +31,7 @@ echo iptables-persistent iptables-persistent/autosave_v6 boolean false | sudo de
 apt-get update
 apt-get upgrade -y
 apt-get dist-upgrade -y
-apt-get install openvpn dnsmasq unzip gcc make automake autoconf dh-autoreconf file patch perl dh-make debhelper devscripts gnupg lintian quilt libtool pkg-config libssl-dev liblzo2-dev libpam0g-dev libpkcs11-helper1-dev zlib1g-dev iptables-persistent -y
+apt-get install openvpn dnsmasq unzip gcc make automake autoconf dh-autoreconf file patch perl dh-make debhelper devscripts gnupg lintian quilt libtool pkg-config libssl-dev liblzo2-dev libpam0g-dev libpkcs11-helper1-dev zlib1g-dev iptables-persistent dhcpcd5 -y
 
 clear
 echo "
