@@ -111,6 +111,7 @@ Things you'll need to know before running this script:
 
 Once the Raspberry Pi has rebooted, and you've reconnected to it via SSH, run the following commands:
 ```bash
+sudo apt-get install unzip -y
 wget https://github.com/ShVerni/Raspberry-Pi-VPN-Gateway/archive/master.zip
 unzip master.zip
 cd Raspberry-Pi-VPN-Gateway-master
