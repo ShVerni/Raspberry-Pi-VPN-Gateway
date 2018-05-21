@@ -36,7 +36,7 @@ else
 	sudo iptables -t mangle -I PREROUTING 1 --source "$ipaddr" -p "$prot" -m "$prot" -m comment --comment "$comment" --j MARK --set-mark 1
 	sudo iptables -I FORWARD 1 --source "$ipaddr" -o eth0 -p "$prot" -m "$prot" -m comment --comment "$comment" --j ACCEPT
 fi
-#netfilter-persistent save
+netfilter-persistent save
 
 echo "
 ~~~~~~~~~~~~~~~~~~~~~
