@@ -91,6 +91,7 @@ fi
 cp "$vpnregion" /etc/openvpn/PIAvpn.conf
 
 #Modify configuration
+sed -i 's/auth-user-pass/auth-user-pass \/etc\/openvpn\/login/' /etc/openvpn/PIAvpn.conf
 if [ "$STRONG" -eq 0 ]; then
 	sed -i 's/ca ca.rsa.2048.crt/ca \/etc\/openvpn\/ca.rsa.2048.crt/' /etc/openvpn/PIAvpn.conf
 	sed -i 's/crl-verify crl.rsa.2048.pem/crl-verify \/etc\/openvpn\/crl.rsa.2048.pem/' /etc/openvpn/PIAvpn.conf
