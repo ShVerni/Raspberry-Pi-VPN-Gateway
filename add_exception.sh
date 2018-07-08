@@ -9,7 +9,7 @@ fi
 clear
 echo "
 ~~~~~~~~~~~~~~~~~~~~~
-This utility let's you add an exception to the VPN.
+This utility lets you add an exception to the VPN.
 The device at the given IP address and, optionally, port
 will be allowed to bypass the VPN connection.
 ~~~~~~~~~~~~~~~~~~~~~

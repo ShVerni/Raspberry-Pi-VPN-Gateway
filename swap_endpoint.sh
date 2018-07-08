@@ -8,7 +8,7 @@ fi
 clear
 echo "
 ~~~~~~~~~~~~~~~~~~~~~
-This utility let's you swap out the endpoint, or
+This utility lets you swap out the endpoint, or
 VPN gateway, that you conenct through.
 ~~~~~~~~~~~~~~~~~~~~~
 Press any key to continue" 
