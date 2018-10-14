@@ -17,3 +17,8 @@ check host google.com with address google.com
 check file vpnfix.log with path /home/pi/vpnfix.log
         start  "/bin/bash -c 'touch /home/pi/vpnfix.log && chown pi:pi /home/pi/vpnfix.log && chmod 666 /home/pi/vpnfix.log'"
         if size > 1000 MB then exec "/bin/rm /home/pi/vpnfix.log"
+        
+set httpd port 2812 and
+ use address localhost
+ allow localhost
+ allow admin:monit
