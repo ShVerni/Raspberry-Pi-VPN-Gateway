@@ -274,6 +274,7 @@ select yn in "Yes" "No"; do
 		chmod 755 /etc/network/if-up.d/vpnbypass
 		rm /etc/init.d/vpnbypass
 		cp vpnbypass /etc/init.d/
+		chmod 755 /etc/init.d/vpnbypass
 		update-rc.d vpnbypass defaults
 		cp add_exception.sh /home/pi/
 		chmod 755 /home/pi/add_exception.sh

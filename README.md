@@ -129,6 +129,14 @@ If you see something like the following anywhere in the output, most importantly
 tun0      Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
           inet addr:10.79.10.6  P-t-P:10.79.10.5  Mask:255.255.255.255
 ```
+If there's a problem Monit will automatically reboot the Pi a minute or so after booting up, so to troubleshoot you'll need to disable Monit temporarily with this command (this needs to be done at each boot):
+```bash
+sudo monit stop all
+```
+Or, if that doesn't work, you can disable Monit entirely with the command:
+```bash
+sudo systemctl disable monit
+```
 
 ### Set Up Router
 Now that your Raspberry Pi is up and running, you need to point your router's DHCP configuration at it. Each router is different, but in general, look in your router's settings for the DHCP configuration and change it to match the following:
