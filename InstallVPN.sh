@@ -268,7 +268,7 @@ select yn in "Yes" "No"; do
 		fi
 		echo "105 vpnBypass" | tee -a /etc/iproute2/rt_tables
 		
-		echo -e "#!/bin/bash\nRULE_EXISTS=\$(ip rule | grep -c \"vpnBypass\")\n\nif [ \"\$RULE_EXISTS\" -eq 0 ]; then\n\tip rule add fwmark 1 table vpnBypass\nfi\n\nsleep 10\nip route add 128.0.0.0/1 via $gatewayadr dev eth0 table vpnBypass || true\nip route add 0.0.0.0/1 via $gatewayadr dev eth0 table vpnBypass || true" >> vpnbypass
+		echo -e "#\x21/bin/bash\n### BEGIN INIT INFO\n# Provides:          rulechecking\n# Required-Start:    \$all\n# Required-Stop:\n# Default-Start:     2 3 4 5\n# Default-Stop:\n# Short-Description: Ensures IP rules are in place.\n### END INIT INFO\n\nRULE_EXISTS=\$(ip rule | grep -c \"vpnBypass\")\n\nif [ \"\$RULE_EXISTS\" -eq 0 ]; then\n\tip rule add fwmark 1 table vpnBypass\nfi\n\nsleep 10\nip route add 128.0.0.0/1 via $gatewayadr dev eth0 table vpnBypass || true\nip route add 0.0.0.0/1 via $gatewayadr dev eth0 table vpnBypass || true" >> vpnbypass
 		rm /etc/network/if-up.d/vpnbypass
 		cp vpnbypass /etc/network/if-up.d/
 		chmod 755 /etc/network/if-up.d/vpnbypass
