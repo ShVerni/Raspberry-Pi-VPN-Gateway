@@ -17,7 +17,7 @@ if you haven't, push ctr+c and do so now. See the Read Me for details.
 Press any key to continue"
 read -n 1 -s
 
-clear
+clear 
 echo "
 ~~~~~~~~~~~~~~~~~~~~~
 Now we need to install some programs, thie will take a while.
@@ -31,7 +31,7 @@ echo iptables-persistent iptables-persistent/autosave_v6 boolean false | sudo de
 apt-get update
 apt-get upgrade -y
 apt-get dist-upgrade -y
-apt-get install openvpn dnsmasq unzip gcc make automake autoconf dh-autoreconf file patch perl dh-make debhelper devscripts gnupg lintian quilt libtool pkg-config libssl-dev liblzo2-dev libpam0g-dev libpkcs11-helper1-dev zlib1g-dev iptables-persistent dhcpcd5 -y
+apt-get install openvpn dnsmasq unzip gcc make automake autoconf dh-autoreconf file patch perl dh-make debhelper devscripts gnupg lintian quilt libtool pkg-config liblzo2-dev libpam0g-dev libpkcs11-helper1-dev zlib1g-dev iptables-persistent dhcpcd5 -y
 
 clear
 echo "
@@ -170,7 +170,7 @@ and you'll need to know the IP address you'd like for the Raspberry Pi.
 ~~~~~~~~~~~~~~~~~~~~~
 "
 
-read -p 'Gateway IP address: ' gatewayadr
+read -p 'Internet Gateway IP address: ' gatewayadr
 read -p 'Raspberry Pi IP address: ' piadr
 #Static routes	
 
@@ -182,9 +182,9 @@ else
 fi
 
 if ! grep -Fq "iface eth0 inet" /etc/network/interfaces; then
-	echo -e "iface eth0 inet static\n    address $piadr\n    netmask 255.255.255.0\n    gateway $gatewayadr\n    dns-nameservers 209.222.18.222 209.222.18.218/" | tee -a /etc/network/interfaces
+	echo -e "auto eth0\niface eth0 inet static\n    address $piadr\n    netmask 255.255.255.0\n    gateway $gatewayadr\n    dns-nameservers 209.222.18.222 209.222.18.218" | tee -a /etc/network/interfaces
 else
-	sed -i -r "s/iface eth0 inet manual|iface eth0 inet auto/iface eth0 inet static\n    address $piadr\n    netmask 255.255.255.0\n    gateway $gatewayadr\n    dns-nameservers 209.222.18.222 209.222.18.218/" /etc/network/interfaces
+	sed -i -r "s/iface eth0 inet manual|iface eth0 inet auto/iface eth0 inet static\n    address $piadr\n    netmask 255.255.255.0\n    gateway $gatewayadr\n    dns-nameservers 209.222.18.222 209.222.18.218" /etc/network/interfaces
 fi
 
 #Restore or backup original configuration
@@ -268,13 +268,12 @@ select yn in "Yes" "No"; do
 		fi
 		echo "105 vpnBypass" | tee -a /etc/iproute2/rt_tables
 		
-		echo -e "#!/bin/bash\nRULE_EXISTS=\$(ip rule | grep -c \"vpnBypass\")\n\nif [ \"\$RULE_EXISTS\" -eq 0 ]; then\n\tip rule add fwmark 1 table vpnBypass\nfi\n\nsleep 10\nip route add 128.0.0.0/1 via $gatewayadr dev eth0 table vpnBypass\nip route add 0.0.0.0/1 via $gatewayadr dev eth0 table vpnBypass" >> vpnbypass
+		echo -e "#!/bin/bash\nRULE_EXISTS=\$(ip rule | grep -c \"vpnBypass\")\n\nif [ \"\$RULE_EXISTS\" -eq 0 ]; then\n\tip rule add fwmark 1 table vpnBypass\nfi\n\nsleep 10\nip route add 128.0.0.0/1 via $gatewayadr dev eth0 table vpnBypass || true\nip route add 0.0.0.0/1 via $gatewayadr dev eth0 table vpnBypass || true" >> vpnbypass
 		rm /etc/network/if-up.d/vpnbypass
 		cp vpnbypass /etc/network/if-up.d/
 		chmod 755 /etc/network/if-up.d/vpnbypass
 		rm /etc/init.d/vpnbypass
 		cp vpnbypass /etc/init.d/
-		chmod 755 /etc/init.d/vpnbypass
 		update-rc.d vpnbypass defaults
 		cp add_exception.sh /home/pi/
 		chmod 755 /home/pi/add_exception.sh
